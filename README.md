@@ -8,7 +8,7 @@ Built by jessethd.
 Relationally, the database is built around three entities: Users, Trumpets, and ReTrumpets. Trumpet entities can also be split into two
 separate categories: Trumpets and ReplyTrumpets. The diagram below contains additional details regarding types and relations.
 
-<a href="url"><img src="http://i.imgur.com/AIdFRim.png"></a>
+<a href="url"><img src="http://i.imgur.com/gh4KAQj.png"></a>
 
 **User entities** in the system possess 5 attributes; 4 required, 1 optional: 
 * user_id (PK)
@@ -18,10 +18,11 @@ separate categories: Trumpets and ReplyTrumpets. The diagram below contains addi
 * profile_picture (nullable)
 
 
-**Trumpet entities** have 7 attributes: 6 required, 1 optional:
+**Trumpet entities** have 8 attributes: 7 required, 1 optional:
 * trumpet_id (PK)
 * user_id (FK)
 * reply_trumpet_id (FK) (nullable)
+* submit_time
 * text
 * likes
 * retrumpets
