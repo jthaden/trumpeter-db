@@ -6,8 +6,8 @@ Built by jessethd.
 
 ## Relational Data Model:
 Relationally, the database is built around three entities: Users, Trumpets, and ReTrumpets. Trumpet entities can also be split into two
-separate categories: Trumpets and ReplyTrumpets. Refer to relational_model.png for diagram containing additional details regarding types
-and relations.
+separate categories: Trumpets and ReplyTrumpets. The diagram below contains additional details regarding types and relations.
+<a href="url"><img src="http://i.imgur.com/AIdFRim.png"></a>
 
 **User entities** in the system possess 5 attributes; 4 required, 1 optional: 
 * user_id (PK)
