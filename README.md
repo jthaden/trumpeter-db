@@ -75,7 +75,7 @@ the trumpet is a reply trumpet (was submitted as a reply to another trumpet), th
 trumpet document that is being replied to. Otherwise, this field is null. Only trumpets that are not replies are queried in the main
 feed.
 
-**Retrumpet collections** are generally represented in this format:
+**ReTrumpet collections** are generally represented in this format:
 
 ```
 retrumpet (
@@ -100,8 +100,8 @@ retrumpet (
 )
 ```
 
-The trumpet that is being retrumpeted is embedded within retrumpet documents. Retrumpets of both regular trumpets and reply trumpets
-are queried in the main feed. The retrumpet document contains only two additional fields, the unique id and the username of the user
-that created the retrumpet.
+The trumpet that is being retrumpeted (copied) is embedded within retrumpet documents. Retrumpets of both regular trumpets and reply
+trumpets are queried in the main feed. The retrumpet document contains only two additional fields, the unique id and the username of the
+user that created the retrumpet.
 
 
