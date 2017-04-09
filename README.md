@@ -48,21 +48,27 @@ under the foreign key reply_trumpet_id.
 Trumpeter utilizes relatively simple logic to retrieve, create, and update data, allowing for an intuitive and lightweight translation
 to non-relational database technology. 
 
-**User collections** contain sensitive data, and all account authorizations in the system are managed securely using
-OAuth2.0. User documents are of varying schemas depending on information provided by the user.
+**User collections** contain sensitive data utilized for account management functions. User documents are of varying schemas depending 
+on information provided by the user. One per user.
+
+**User_info collections** contain user information necessary for public display on Trumpets. Referenced within trumpet and retrumpet 
+documents for data consistency and efficiency purposes.  One per user.
+
+```
+user_info (
+     email_addr: 'dumbo@gmail.com',
+     username: 'BigEars',
+     profile_picture: elephant_photo.jpg
+)
+```
 
 **Trumpet collections** are generally represented in this format:
 
 ```
 trumpet (
      _id: ObjectId(x),
-     user_info:
-     user_info (
-          email_addr: 'dumbo@gmail.com',
-          username: 'BigEars',
-          profile_picture: elephant_photo.jpg
-     ),
-     reply_trumpet_id: null; 
+     user_info: ObjectId(y),
+     reply_trumpet_id: null, 
      submit_time: someRepresentationOfTime,
      text: 'I am the coolest elephant',
      likes: 5,
@@ -70,8 +76,8 @@ trumpet (
      replies: 20,
 )
 ```
-User information documents are embedded within each trumpet document, containing only necessary info about the author of the trumpet. If
-the trumpet is a reply trumpet (was submitted as a reply to another trumpet), the reply_trumpet_id field serves as a reference to the
+User information documents are referenced within each trumpet document, containing only necessary info about the author of the trumpet. 
+If the trumpet is a reply trumpet (was submitted as a reply to another trumpet), the reply_trumpet_id field serves as a reference to the
 trumpet document that is being replied to. Otherwise, this field is null. Only trumpets that are not replies are queried in the main
 feed.
 
@@ -79,17 +85,12 @@ feed.
 
 ```
 retrumpet (
-      _id: new MongoId("y"),
+      _id: ObjectId(x),
       trumpet:
       trumpet (
-           _id: new MongoId("x"),
-           user_info:
-           user_info (
-               email_addr: 'dumbo@gmail.com',
-               username: 'BigEars',
-               profile_picture: elephant_photo.jpg
-           ),
-           reply_trumpet_id: ObjectId(z) OR null, 
+           _id: ObjectId(y),
+           user_info: ObjectId(z),
+           reply_trumpet_id: ObjectId(r) OR null, 
            submit_time: someRepresentationOfTime,
            text: 'I am the coolest elephant',
            likes: 5,
@@ -100,8 +101,8 @@ retrumpet (
 )
 ```
 
-The trumpet that is being retrumpeted (copied) is embedded within retrumpet documents. Retrumpets of both regular trumpets and reply
-trumpets are queried in the main feed. The retrumpet document contains only two additional fields, the unique id and the username of the
-user that created the retrumpet.
+The trumpet document that is being retrumpeted (copied) is embedded within retrumpet documents, providing an unchanging copy of the 
+trumpet data (with the exception of user data). Retrumpets of both regular trumpets and reply trumpets are queried in the main feed. A 
+retrumpet document contains only two additional fields, the unique id and the username of the user that created the retrumpet.
 
 
