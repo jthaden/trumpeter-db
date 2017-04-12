@@ -56,6 +56,7 @@ documents for data consistency and efficiency purposes.  One per user.
 
 ```
 user_info (
+     _id: ObjectId(x),
      email_addr: 'dumbo@gmail.com',
      username: 'BigEars',
      profile_picture: elephant_photo.jpg
