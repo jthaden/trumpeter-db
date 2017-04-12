@@ -1,7 +1,9 @@
 # trumpeter-db
 This repo contains all code related to the backend of the Android application Trumpeter. This includes the MongoDB database, Node.js API
-and backend, relational data model, and more.
-Built by jessethd.
+and backend, server code, relational data model, and more.
+
+Built by jessethd with Node.js, Express, and Mongoose.
+
 
 
 ## Relational Data Model:
@@ -46,7 +48,7 @@ under the foreign key reply_trumpet_id.
 ## MongoDB Translation
 
 Trumpeter utilizes relatively simple logic to retrieve, create, and update data, allowing for an intuitive and lightweight translation
-to non-relational database technology. 
+to non-relational database technology. Additional details regarding data model (types, default values, etc) can be found within Mongoose files for each collection in the ```models``` directory.
 
 **User collections** contain sensitive data utilized for account management functions. User documents are of varying schemas depending 
 on information provided by the user. One per user.
@@ -70,7 +72,7 @@ trumpet (
      _id: ObjectId(x),
      user_info: ObjectId(y),
      reply_trumpet_id: null, 
-     submit_time: someRepresentationOfTime,
+     submit_time: 2/23/2015 11:55:36,
      text: 'I am the coolest elephant',
      likes: 5,
      retrumpets: 2,
@@ -92,7 +94,7 @@ retrumpet (
            _id: ObjectId(y),
            user_info: ObjectId(z),
            reply_trumpet_id: ObjectId(r) OR null, 
-           submit_time: someRepresentationOfTime,
+           submit_time: 2/23/2015 11:55:36,
            text: 'I am the coolest elephant',
            likes: 5,
            retrumpets: 2,
