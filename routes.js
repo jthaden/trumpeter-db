@@ -77,7 +77,7 @@ router.route('/trumpets/:trumpet_id')
             trumpet.save(function(err) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Trumpet like count successfully updated.' });
+                res.json({ message: 'Trumpet retrumpet count successfully updated.' });
             });
  
         });
@@ -95,7 +95,7 @@ router.route('/trumpets/:trumpet_id')
             trumpet.save(function(err) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Trumpet like count successfully updated.' });
+                res.json({ message: 'Trumpet reply count successfully updated.' });
             });
  
         });
