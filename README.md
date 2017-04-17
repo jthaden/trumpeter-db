@@ -89,23 +89,13 @@ feed.
 ```
 retrumpet (
       _id: ObjectId(x),
-      trumpet:
-      trumpet (
-           _id: ObjectId(y),
-           user_info_id: ObjectId(z),
-           reply_trumpet_id: null OR ObjectId(r), 
-           submit_time: 2/23/2015 11:55:36,
-           text: 'I am the coolest elephant',
-           likes: 5,
-           retrumpets: 2,
-           replies: 20,
-       ),
-       retrumpeter_username: 'Mr. Elephant'
+      trumpet: ObjectId(y),
+      retrumpeter_username: 'Mr. Elephant'
 )
 ```
 
-The trumpet document that is being retrumpeted (copied) is embedded within retrumpet documents, providing an unchanging copy of the 
-trumpet data (with the exception of user data). Retrumpets of both regular trumpets and reply trumpets are queried in the main feed. A 
+A reference to the trumpet document that is being retrumpeted (copied) is contained within retrumpet documents, ensuring consistently up
+to date trumpet data and efficient updating.  Retrumpets of both regular trumpets and reply trumpets are queried in the main feed. A 
 retrumpet document contains only two additional fields, the unique id and the username of the user that created the retrumpet.
 
 
