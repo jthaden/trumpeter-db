@@ -30,7 +30,7 @@ separate categories: Trumpets and ReplyTrumpets. The diagram below contains addi
 * retrumpets
 * replies
 
-**ReTrumpet entities** have only 3 attributes, all required:
+**Retrumpet entities** have only 3 attributes, all required:
 * retrumpet_id (PK)
 * trumpet_id (FK)
 * user_id (FK)
@@ -41,7 +41,7 @@ separate categories: Trumpets and ReplyTrumpets. The diagram below contains addi
 is, it was submitted as a reply to another Trumpet), it will contain a foreign key reference to the trumpet_id that is being replied to
 under the foreign key reply_trumpet_id.
 
-**ReTrumpets** are "copies" of Trumpets that can be resubmitted into the system by users. As such, retrumpets share all data values
+**Retrumpets** are "copies" of Trumpets that can be resubmitted into the system by users. As such, retrumpets share all data values
 (likes, replies, etc) with the copied trumpet, and only consist of a unique retrumpet_id and the id of the "retrumpeter", user_id.
 
 
@@ -53,7 +53,7 @@ to non-relational database technology. Additional details regarding data model (
 **User collections** contain sensitive data utilized for account management functions. User documents are of varying schemas depending 
 on information provided by the user. One per user.
 
-**User_info collections** contain user information necessary for public display on Trumpets. Referenced within trumpet and retrumpet 
+**UserInfo collections** contain user information necessary for public display on Trumpets. Referenced within trumpet and retrumpet 
 documents for data consistency and efficiency purposes.  One per user.
 
 ```
@@ -76,7 +76,7 @@ trumpet (
      text: 'I am the coolest elephant',
      likes: 5,
      retrumpets: 2,
-     replies: 20,
+     replies: 20
 )
 ```
 User information documents are referenced within each trumpet document, containing only necessary info about the author of the trumpet. 
@@ -84,7 +84,7 @@ If the trumpet is a reply trumpet (was submitted as a reply to another trumpet),
 trumpet document that is being replied to. Otherwise, this field is null. Only trumpets that are not replies are queried in the main
 feed.
 
-**ReTrumpet collections** are generally represented in this format:
+**Retrumpet collections** are generally represented in this format:
 
 ```
 retrumpet (
@@ -100,7 +100,7 @@ retrumpet (
            retrumpets: 2,
            replies: 20,
        ),
-       retrumpeter_username: 'Mr. Elephant', 
+       retrumpeter_username: 'Mr. Elephant'
 )
 ```
 
