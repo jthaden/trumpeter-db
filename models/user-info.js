@@ -3,8 +3,7 @@ var Schema       = mongoose.Schema;
 var ObjectId 	 = mongoose.schema.types.ObjectId;
 
 var userInfoSchema = new Schema({
-    email_addr: String,
-    username: String,
+    username: {type: String, unique: true, required: true},
     profile_picture: Buffer
 });
 

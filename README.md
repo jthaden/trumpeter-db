@@ -48,18 +48,30 @@ under the foreign key reply_trumpet_id.
 ## MongoDB Translation
 
 Trumpeter utilizes relatively simple logic to retrieve, create, and update data, allowing for an intuitive and lightweight translation
-to non-relational database technology. Additional details regarding data model (types, default values, etc) can be found within Mongoose files for each collection in the ```models``` directory.
+to non-relational database technology. Additional data model and implementation details (types, default values, functions, etc) can be 
+found within Mongoose files for each collection in the ```models``` directory.
 
-**User collections** contain sensitive data utilized for account management functions. User documents are of varying schemas depending 
-on information provided by the user. One per user.
+**User collections** contain all user data. Salts and hashes are utilized with Node's built in crypto and pbkdf2 for user 
+authentication; no sensitive information is stored in the database. User documents are of varying schemas depending on information provided 
+by the user. One per user.
 
-**UserInfo collections** contain user information necessary for public display on Trumpets. Referenced within trumpet and retrumpet 
+```
+user (
+    _id: ObjectId(x), 
+    email_addr: dumbo@gmail.com,
+    username: 'BigEars',
+    profile_picture: elephant_photo.jpg,
+    hash: someHash,
+    salt: someSalt
+)
+```
+
+**UserInfo collections** contain only user information necessary for public display on Trumpets. Referenced within trumpet and retrumpet 
 documents for data consistency and efficiency purposes.  One per user.
 
 ```
 user_info (
      _id: ObjectId(x),
-     email_addr: 'dumbo@gmail.com',
      username: 'BigEars',
      profile_picture: elephant_photo.jpg
 )
