@@ -70,8 +70,8 @@ user_info (
 ```
 trumpet (
      _id: ObjectId(x),
-     user_info: ObjectId(y),
-     reply_trumpet_id: null, 
+     user_info_id: ObjectId(y),
+     reply_trumpet_id: null OR ObjectId(r), 
      submit_time: 2/23/2015 11:55:36,
      text: 'I am the coolest elephant',
      likes: 5,
@@ -92,8 +92,8 @@ retrumpet (
       trumpet:
       trumpet (
            _id: ObjectId(y),
-           user_info: ObjectId(z),
-           reply_trumpet_id: ObjectId(r) OR null, 
+           user_info_id: ObjectId(z),
+           reply_trumpet_id: null OR ObjectId(r), 
            submit_time: 2/23/2015 11:55:36,
            text: 'I am the coolest elephant',
            likes: 5,
