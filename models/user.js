@@ -4,6 +4,13 @@ var ObjectId 	 = mongoose.schema.types.ObjectId;
 var crypto  	 = require('crypto');
 var jwt          = require('jsonwebtoken');
 
+/**
+ * Defines the User schema and model for Mongoose, and implements methods that aid in
+ * the process of user creation and authentication. Note that email_addr and username 
+ * are both unique fields, allowing for easy prevention and handling of duplicate
+ * users in the API (routes.js).  
+ **/
+
 var userSchema = new Schema({
     email_addr: {type: String, unique: true, required: true},
     username: {type: String, unique: true, required: true},

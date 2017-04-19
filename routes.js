@@ -1,12 +1,17 @@
 var express = require('express');
- 
 var router = express.Router();
+var passport = require('passport');
+var mongoose = require('mongoose');
 
+
+// TODO: This or mongoose.model('Model')?
 var User        = require('./models/user');
 var UserInfo 	= require('./models/user-info');
 var Trumpet 	= require('./models/trumpet');
 var Retrumpet 	= require('./models/message');
- 
+
+
+
 router.use(function timeLog(req, res, next) {
   console.log('Request Received: ', dateDisplayed(Date.now()));
   next();
@@ -18,33 +23,73 @@ router.get('/', function(req, res) {
 });
 
 
+
 /**************
 ** Users
-**************/ 
+**************/
 
 /**
-// Create a new user
-router.route('/users')
+ * This section of the controller is for user account creation and authentication. 
+ * Server receives user input from these actions and returns either a response 
+ * indicating specific source of invalidity for app to pass on to user (lots of 
+ * info for register, minimal for login), or a JSON web token carrying appropriate 
+ * user information for logged in user. Authentication handled in passport (config/passport.js).
+ **/
+
+/**
+ * Register a new Trumpeter user. Uses password input to create new salt and hash 
+ * and returns to app instance a JWT for this new user's session. 
+ * TODO: bad input is handled locally in app (info too short, too long, mismatching 
+ * passwords, etc) but return info about all all serverside conflicts.
+ * For register: email collision, username collision
+ **/
+router.route('/register')
     .post(function(req, res) {
         var user = new User();
         user.email_addr = req.body.email_addr;
         user.username = req.body.username;
+        // set salt and hash for user with provided password
         user.setPassword(req.body.password);
-        user.save(function(err) {
-            if (err)
-                res.send(err);
-            res.json({ message: 'User created and submitted successfully.' });
-        });
-    });
-*/
+        // Return new user state with JWT
+        user.save(function(err){
+            var token;
+            token = user.generateJwt();
+            res.status(200);
+            res.json({
+                "token": token
+            });
+        })
+});
 
+/**
+ * Authenticates user login through Passport (magic happens in config/passport.js).
+ * Returns JWT to app instance upon successful login. 
+ * TODO: as in register, display info about conflicts. No conflicts handled in app.
+ * For login: invalid email/username, invalid password (or just password?)  
+ **/
+router.route('/login')
+    .post(function(req, res) {
+        passport.authenticate('local', function(err, user, info){
+            var token;
+            // If error, return error
+            if (err) {
+                res.status(404).json(err);
+                return;
+            }
+            // If user is found and valid, return JWT for user
+            if (user){
+                token = user.generateJwt();
+                res.status(200);
+                res.json({
+                    "token": token
+                });
+            // if no user is found, return details
+            } else {
+                res.status(401).json(info);
+            }
+        })(req, res);
+});
 
-
-/**************
-** UserInfo
-**************/ 
-
-// Retrieve UserInfo document for given username
 
 
 /**************
@@ -160,6 +205,8 @@ router.route('/trumpets')
             res.json({ message: 'Reply trumpet created and submitted successfully.' });
         });
     });
+
+
 
 /**************
 ** Retrumpets
