@@ -51,9 +51,9 @@ Trumpeter utilizes relatively simple logic to retrieve, create, and update data,
 to non-relational database technology. Additional data model and implementation details (types, default values, functions, etc) can be 
 found within Mongoose files for each collection in the ```models``` directory.
 
-**User collections** contain all user data. Salts and hashes are utilized with Node's built in crypto and pbkdf2 for user 
-authentication; no sensitive information is stored in the database. User documents are of varying schemas depending on information provided 
-by the user. One per user.
+**User collections** contain all user data. Salts and hashes are utilized with Node's built in crypto and pbkdf2 for user authentication; 
+no sensitive information is stored in the database. User documents are of varying schemas depending on information provided by the user. 
+One per user.
 
 ```
 user (

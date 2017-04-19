@@ -2,9 +2,10 @@ var express = require('express');
  
 var router = express.Router();
 
-var user_info 	= require('./models/user-info');
-var trumpet 	= require('./models/trumpet');
-var retrumpet 	= require('./models/message');
+var User        = require('./models/user');
+var UserInfo 	= require('./models/user-info');
+var Trumpet 	= require('./models/trumpet');
+var Retrumpet 	= require('./models/message');
  
 router.use(function timeLog(req, res, next) {
   console.log('Request Received: ', dateDisplayed(Date.now()));
@@ -21,20 +22,21 @@ router.get('/', function(req, res) {
 ** Users
 **************/ 
 
+/**
 // Create a new user
 router.route('/users')
     .post(function(req, res) {
         var user = new User();
-	user.email_addr = req.body.email_addr;
+        user.email_addr = req.body.email_addr;
         user.username = req.body.username;
-	user.setPassword(req.body.password);
+        user.setPassword(req.body.password);
         user.save(function(err) {
             if (err)
                 res.send(err);
             res.json({ message: 'User created and submitted successfully.' });
         });
     });
-
+*/
 
 
 
@@ -166,7 +168,7 @@ router.route('/trumpets')
 // Retrieve all retrumpets
 router.route('/retrumpets')
     .get(function(req, res) {
-         Trumpet.find(function(err, retrumpets) {
+         Retrumpet.find(function(err, retrumpets) {
              if (err)
                  res.send(err);
              res.json(retrumpets);
