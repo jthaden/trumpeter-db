@@ -19,19 +19,28 @@ var userSchema = new Schema({
     salt: String
 });
 
-// Generates salt and hash based on given password
+/**
+ * Generates salt and hash based on given password.
+ **/ 
 userSchema.methods.setPassword = function(password){
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 
-// Validates given password by calculating new hash with password and salt and comparing
-// to stored, valid hash
+/**
+ * Validates given password by calculating new hash with password and salt and comparing
+ * to stored hash.
+ **/ 
 userSchema.methods.validPassword = function(password){
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
     return this.hash = hash;
 };
 
+/**
+ * Generates a JWT to be sent to authorized user. Provides all necessary user information
+ * and is sent back to server with each request for secured data (personal profile data, etc) 
+ * to ensure that user is still who they say they are.  
+ **/
 userSchema.methods.generateJwt = function() {
     var expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);

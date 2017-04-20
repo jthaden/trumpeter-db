@@ -120,12 +120,12 @@ router.route('/trumpets/:trumpet_id')
 
 
 // Increment the like count of a trumpet with given ObjectID by 1
-router.route('/trumpets/:trumpet_id')
+router.route('/trumpets/:trumpet_id/likes')
     .put(function(req, res) {
         Trumpet.findById(req.params.trumpet_id, function(err, trumpet) {
             if (err)
                 res.send(err);
-	    trumpet.likes = trumpet.likes + 1;
+	        trumpet.likes = trumpet.likes + 1;
             trumpet.save(function(err) {
                 if (err)
                     res.send(err);
@@ -136,12 +136,12 @@ router.route('/trumpets/:trumpet_id')
     });
 
 // Increment the retrumpet count of a trumpet with given ObjectID by 1
-router.route('/trumpets/:trumpet_id')
+router.route('/trumpets/:trumpet_id/retrumpet')
     .put(function(req, res) {
         Trumpet.findById(req.params.trumpet_id, function(err, trumpet) {
             if (err)
                 res.send(err);
-	    trumpet.retrumpets = trumpet.retrumpets + 1;
+	        trumpet.retrumpets = trumpet.retrumpets + 1;
             trumpet.save(function(err) {
                 if (err)
                     res.send(err);
@@ -154,12 +154,12 @@ router.route('/trumpets/:trumpet_id')
 
 
 // Increment the reply count of a trumpet with given ObjectID by 1
-router.route('/trumpets/:trumpet_id')
+router.route('/trumpets/:trumpet_id/reply')
     .put(function(req, res) {
         Trumpet.findById(req.params.trumpet_id, function(err, trumpet) {
             if (err)
                 res.send(err);
-	    trumpet.replies = trumpet.replies + 1;
+	        trumpet.replies = trumpet.replies + 1;
             trumpet.save(function(err) {
                 if (err)
                     res.send(err);
@@ -174,8 +174,8 @@ router.route('/trumpets/:trumpet_id')
 router.route('/trumpets')
     .post(function(req, res) {
         var trumpet = new Trumpet();
-	trumpet.user_info_id = req.body.user_info_id;
-	trumpet.reply_trumpet_id = null;
+	    trumpet.user_info_id = req.body.user_info_id;
+	    trumpet.reply_trumpet_id = null;
         trumpet.submit_time = req.body.submit_time;
         trumpet.text = req.body.text;
         trumpet.likes = 0;
@@ -189,11 +189,11 @@ router.route('/trumpets')
     });
 
 // Create a new reply trumpet
-router.route('/trumpets')
+router.route('/trumpets/reply')
     .post(function(req, res) {
         var trumpet = new Trumpet();
-	trumpet.user_info_id = req.body.user_info_id;
-	trumpet.reply_trumpet_id = req.body.reply_trumpet_id;
+	    trumpet.user_info_id = req.body.user_info_id;
+	    trumpet.reply_trumpet_id = req.body.reply_trumpet_id;
         trumpet.submit_time = req.body.submit_time;
         trumpet.text = req.body.text;
         trumpet.likes = 0;
@@ -205,6 +205,19 @@ router.route('/trumpets')
             res.json({ message: 'Reply trumpet created and submitted successfully.' });
         });
     });
+
+// Delete an existing trumpet
+router.route('/trumpets/:trumpet_id')
+    .delete(function(req, res) {
+        Trumpet.remove({
+            _id: req.params.trumpet_id
+        }, function(err, trumpet) {
+            if (err)
+                res.send(err);
+            res.json({ message: 'Trumpet deleted successfully.' });
+        });
+    });
+    
 
 
 
@@ -232,8 +245,19 @@ router.route('/retrumpets/:retrumpet_id')
         });
     });
 
+// Delete an existing retrumpet
+router.route('/retrumpets/:retrumpet_id')
+    .delete(function(req, res) {
+        ReTrumpet.remove({
+            _id: req.params.retrumpet_id
+        }, function(err, retrumpet) {
+            if (err)
+                res.send(err);
+            res.json({ message: 'Retrumpet deleted successfully.' });
+        });
+    });
+    
 
- 
 module.exports = router;
  
 function dateDisplayed(timestamp) {
