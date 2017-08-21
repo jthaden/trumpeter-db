@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var User        = require('./models/user');
 var UserInfo 	= require('./models/user-info');
 var Trumpet 	= require('./models/trumpet');
-var Retrumpet 	= require('./models/message');
+var Retrumpet 	= require('./models/retrumpet');
 
 
 
@@ -50,6 +50,17 @@ router.route('/register')
         user.username = req.body.username;
         // set salt and hash for user with provided password
         user.setPassword(req.body.password);
+
+        // create associated User-Info document
+        // TODO: may need to perform rest of registration in userInfo callback
+        // TODO: may also need to copy user_info_id from callback after save is successful
+        var userInfo = new UserInfo();
+        userInfo.username = req.body.username;
+        userInfo.save(function(err){
+
+        });
+        user.user_info_id = userInfo._id; 
+
         // Return new user state with JWT
         user.save(function(err){
             var token;
@@ -91,6 +102,30 @@ router.route('/login')
 });
 
 
+/*************
+ ** User-Info
+ ************/
+
+// Retrieve all user-info
+router.route('/user-info')
+    .get(function(req, res) {
+         UserInfo.find(function(err, userInfo) {
+             if (err)
+                 res.send(err);
+             res.json(userInfo);
+         });
+    });
+
+// Retrieve user-info with given ObjectID
+router.route('/user-info/:user-info_id')
+    .get(function(req, res) {
+        UserInfo.findById(req.params.user-info_id, function(err, userInfo) {
+            if (err)
+                res.send(err)
+            res.json(userInfo);
+        });
+    });
+
 
 /**************
 ** Trumpets
@@ -116,8 +151,9 @@ router.route('/trumpets/:trumpet_id')
         });
     });
 
-// Retrieve all trumpets that are replies to ObjectID (have ObjectID as reply_trumpet_id)
+// Retrieve all trumpets that are replies to trumpet ObjectID (have trumpet ObjectID as reply_trumpet_id)
 
+// Retrieve all reply trumpets (have non-null reply_trumpet_id)
 
 // Increment the like count of a trumpet with given ObjectID by 1
 router.route('/trumpets/:trumpet_id/likes')
@@ -242,6 +278,19 @@ router.route('/retrumpets/:retrumpet_id')
             if (err)
                 res.send(err)
             res.json(retrumpet);
+        });
+    });
+
+// Create a new retrumpet
+router.route('/retrumpets')
+    .post(function(req, res) {
+        var retrumpet = new Retrumpet();
+        retrumpet.trumpet_id = req.body.trumpet_id;
+        retrumpet.retrumpeter_username = req.body.retrumpeter_username;;
+        retrumpet.save(function(err) {
+            if (err)
+                res.send(err);
+            res.json({ message: 'Retrumpet created and submitted successfully.' });
         });
     });
 

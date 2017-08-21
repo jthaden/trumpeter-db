@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
  
 // Set port
-var port = process.env.PORT || 8080;        // set the port
+var port = 3000;        // set the port
  
 // Initialize Passport and define a prefix for all routes
 app.use(passport.initialize());

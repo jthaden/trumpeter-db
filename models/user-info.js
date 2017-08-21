@@ -1,9 +1,9 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
-var ObjectId 	 = mongoose.schema.types.ObjectId;
+var ObjectId 	 = mongoose.Schema.Types.ObjectId;
 
 var userInfoSchema = new Schema({
-    username: {type: String, unique: true, required: true},
+    username: {type: String},
     profile_picture: Buffer
 });
 

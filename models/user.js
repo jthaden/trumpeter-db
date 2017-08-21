@@ -1,6 +1,6 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
-var ObjectId 	 = mongoose.schema.types.ObjectId;
+var ObjectId 	 = mongoose.Schema.Types.ObjectId;
 var crypto  	 = require('crypto');
 var jwt          = require('jsonwebtoken');
 
@@ -12,6 +12,7 @@ var jwt          = require('jsonwebtoken');
  **/
 
 var userSchema = new Schema({
+    user_info_id: ObjectId, 
     email_addr: {type: String, unique: true, required: true},
     username: {type: String, unique: true, required: true},
     profile_picture: Buffer,
@@ -46,10 +47,11 @@ userSchema.methods.generateJwt = function() {
     expiry.setDate(expiry.getDate() + 7);
     return jwt.sign({
         _id: this._id,
+        user_info_id: this.user_info_id,
         email_addr: this.email_addr,
         username: this.username,
         exp: parseInt(expiry.getTime() / 1000),
-    }, "MY_SECRET"); 
+    }, "Rollercoaster_Tycoon"); 
 };
 
 module.exports = mongoose.model('User', userSchema);
