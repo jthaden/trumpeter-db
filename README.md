@@ -96,7 +96,7 @@ retrumpet document contains only two additional fields, the unique id and the us
 
 
 ## Relational Data Model:
-Relationally, the database is built around four entities: Users, User-Info, Trumpets, and ReTrumpets. Trumpet entities can also be split
+Relationally, the database is built around four entities: Users, UserInfo, Trumpets, and ReTrumpets. Trumpet entities can also be split
 into two separate categories: Trumpets and ReplyTrumpets. The diagram below contains additional details regarding types and relations.
 
 <a href="url"><img src="http://i.imgur.com/eKtoAY0.png"></a>
