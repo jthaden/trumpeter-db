@@ -4,6 +4,26 @@ and backend, server code, relational data model, and more.
 
 Built by jessethd with Node.js, Express, and Mongoose.
 
+## Main Files:
+
+**```routes.js```:** Home of the REST API. Receives HTTP requests at various routes, facilitating retrieval, update, creation, and
+deletion of trumpet and retrumpet data. This file also contains the calls for user account creation and login, done securely with
+Passport and methods defined in the Mongoose 'User' model. These account management routes return a JSON web token representing the
+current user and session.
+
+**```server.js```:**
+Home of main Node server code. Initializes middleware and connects to Mongo database through Mongoose.
+
+**```config/passport.js```:**
+Defines the local strategy for Passport, which handles user account authentication. Uses security methods defined under the Mongoose
+'User' model to check password validity and returns an answer to the API.
+
+**```models```:**
+This directory contains files that define Mongoose schemas for collections in the database and functions that work on the data in those
+schemas. ```user.js``` defines ```setPassword``` and ```validPassword```, which use pbkdf2 from Express's Crypto module to generate a 
+salt and hash from a given password and test a given password on a user's salt and hash, respectively. Also defined in this file is 
+```generateJWT```, which creates a JSON web token for a given user session containing all necessary info about the currently logged in 
+user.
 
 
 ## Relational Data Model:
