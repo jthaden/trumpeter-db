@@ -74,6 +74,7 @@ trumpet (
      replies: 20
 )
 ```
+
 User information documents are referenced within each trumpet document, containing only necessary info about the author of the trumpet. 
 If the trumpet is a reply trumpet (was submitted as a reply to another trumpet), the reply_trumpet_id field serves as a reference to the
 trumpet document that is being replied to. Otherwise, this field is null. Only trumpets that are not replies are queried in the main
@@ -89,9 +90,13 @@ retrumpet (
 )
 ```
 
-A reference to the trumpet document that is being retrumpeted (copied) is contained within retrumpet documents, ensuring consistently up
-to date trumpet data and efficient updating.  Retrumpets of both regular trumpets and reply trumpets are queried in the main feed. A 
-retrumpet document contains only two additional fields, the unique id and the username of the user that created the retrumpet.
+A reference to the trumpet document that is being retrumpeted (copied) is contained within retrumpet documents. Retrumpets of both 
+regular trumpets and reply trumpets are queried in the main feed. A retrumpet document contains only two additional fields, the unique
+id and the username of the user that created the retrumpet. NOTE: trumpet data is normalized (NOT embedded) within retrumpet documents 
+to facilitate more efficient updating of trumpet data (only required to update one original trumpet document, and not all of its 
+retrumpets), and to ensure that updating is an atomic operation. Non-normalizing the retrumpet model, that is, embedding trumpet data 
+within retrumpet documents, provides for more efficient queries by removing the extra trumpet lookup from each retrumpet query. 
+Atomicity and efficiency of update is preferable in this case.
 
 
 
