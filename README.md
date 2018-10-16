@@ -85,7 +85,7 @@ feed of the application.
 ```
 retrumpet (
       _id: ObjectId(x),
-      trumpet: ObjectId(y),
+      trumpet_id: ObjectId(y),
       retrumpeter_username: 'Mr. Elephant'
 )
 ```
