@@ -141,6 +141,9 @@ router.route('/trumpets')
          });
     });
 
+// Retrieve all non-reply trumpets
+
+
 // Retrieve trumpet with given ObjectID
 router.route('/trumpets/:trumpet_id')
     .get(function(req, res) {
@@ -172,7 +175,7 @@ router.route('/trumpets/:trumpet_id/likes')
     });
 
 // Increment the retrumpet count of a trumpet with given ObjectID by 1
-router.route('/trumpets/:trumpet_id/retrumpet')
+router.route('/trumpets/:trumpet_id/retrumpets')
     .put(function(req, res) {
         Trumpet.findById(req.params.trumpet_id, function(err, trumpet) {
             if (err)
@@ -188,9 +191,8 @@ router.route('/trumpets/:trumpet_id/retrumpet')
     });
 
 
-
 // Increment the reply count of a trumpet with given ObjectID by 1
-router.route('/trumpets/:trumpet_id/reply')
+router.route('/trumpets/:trumpet_id/replies')
     .put(function(req, res) {
         Trumpet.findById(req.params.trumpet_id, function(err, trumpet) {
             if (err)
@@ -224,6 +226,7 @@ router.route('/trumpets')
         });
     });
 
+
 // Create a new reply trumpet
 router.route('/trumpets/reply')
     .post(function(req, res) {
@@ -242,6 +245,7 @@ router.route('/trumpets/reply')
         });
     });
 
+
 // Delete an existing trumpet
 router.route('/trumpets/:trumpet_id')
     .delete(function(req, res) {
@@ -254,7 +258,6 @@ router.route('/trumpets/:trumpet_id')
         });
     });
     
-
 
 
 /**************
