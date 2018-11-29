@@ -77,8 +77,8 @@ trumpet (
 
 User information documents are referenced within each trumpet document, containing only necessary info about the author of the trumpet. 
 If the trumpet is a reply trumpet (was submitted as a reply to another trumpet), the reply_trumpet_id field serves as a reference to the
-trumpet document that is being replied to. Otherwise, this field is null. Only trumpets that are not replies are queried in the main
-feed of the application.
+trumpet document that is being replied to. Otherwise, this field is not present. Only trumpets that are not replies are queried in the 
+main feed of the application.
 
 **Retrumpet collections** are generally represented in this format:
 
