@@ -3,13 +3,13 @@ var Schema 	    = mongoose.Schema;
 var ObjectId 	= mongoose.Schema.Types.ObjectId;
 
 var trumpetSchema = new Schema({
-    user_info_id: ObjectId,
+    user_info_id: { type: ObjectId, required: true },
     reply_trumpet_id: ObjectId,
-    submit_time: { type: Date, default: Date.now},
-    text: String,
-    likes: { type: Number, default: 0},
-    retrumpets: { type: Number, default: 0},
-    replies: { type: Number, default: 0}
+    submit_time: { type: Date, default: Date.now, required: true },
+    text: { type: String, required: true },
+    likes: { type: Number, default: 0, required: true },
+    retrumpets: { type: Number, default: 0, required: true },
+    replies: { type: Number, default: 0, required: true }
 });
 
 module.exports = mongoose.model('Trumpet', trumpetSchema);
