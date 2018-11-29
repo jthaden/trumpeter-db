@@ -18,7 +18,7 @@ var Retrumpet   = require('./models/retrumpet');
 
 
 // TODO: replace arrow functions (lambdas)
-
+// assert or expect instead of should?
 
 chai.use(chatHttp);
 
@@ -34,6 +34,57 @@ describe('Trumpets', () => {
             done();
         });
     });
+    // GET: no trumpets in db
+    describe('/GET trumpets', () => {
+        it('should get ALL trumpets (none)', (done) => {
+            chai.request(server)
+                .get('/trumpets')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.eql(0);
+                    done();
+                });
+        });
+    });
+
+    // POST: missing required field (user_info_id)
+    describe('/POST trumpets', () => {
+        it('should not POST a trumpet without user_info_id field', (done) => {
+            let trumpet = {
+                text: "wololo DON'T POST ME!"
+            }
+            chai.request(server)
+                .post('/trumpets')
+                .send(trumpet)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('errors');
+                    res.body.errors.should.have.property('user_info_id');
+                    res.body.errors.user_info_id.should.have.property.('kind').eql('required');
+                    done();
+                });
+        });
+        // POST: valid trumpet with default values
+        it('should POST a trumpet with default values', (done) => {
+            var info_id = mongoose.Types.ObjectId();
+            let trumpet = {
+                user_info_id: info_id,
+                text: "PLS POST!"
+            }
+            chai.request(server)
+                .post('/trumpets')
+                .send(trumpet)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('user_info_id').eql(info_id);
+                    res.body          
+
+
+
+   
 
 
 
