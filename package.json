@@ -2,11 +2,20 @@
   "name": "trumpeter-db",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "express": "~4.15.2",
-    "jsonwebtoken": "^7.3.0",
-    "mongoose": "~4.9.4",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+      "body-parser": "~1.17.1",
+      "express": "~4.15.2",
+      "jsonwebtoken": "^7.3.0",
+      "mongoose": "~4.9.4",
+      "passport": "^0.3.2",
+      "passport-local": "^1.0.0"
+  }, 
+  "devDependencies": {
+      "chai": "^3.5.0",
+      "chai-http": "^2.0.1",
+      "mocha": "^2.4.5"
+  },
+  "scripts": {
+      "start": "SET NODE_ENV=dev && node server.js",
+      "test": "mocha --timeout 10000"
   }
 }
