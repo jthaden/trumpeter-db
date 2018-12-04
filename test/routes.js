@@ -67,6 +67,7 @@ describe('Trumpets', () => {
                 });
         });
         // POST: valid trumpet with default values
+        // also test lack of reply_trumpet_ID  TODO syntax works?
         it('should POST a trumpet with default values', (done) => {
             var info_id = mongoose.Types.ObjectId();
             let trumpet = {
@@ -80,7 +81,42 @@ describe('Trumpets', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('user_info_id').eql(info_id);
-                    res.body          
+                    res.body.should.not.have.property('reply_trumpet_id');
+                    res.body.should.have.property('submit_time');
+                    res.body.should.have.property('text').eql("PLS POST!");
+                    res.body.should.have.property('likes').eql(0);
+                    res.body.should.have.property('retrumpets').eql(0);
+                    res.body.should.have.property('replies').eql(0);
+                    done();
+                });
+        });        
+        // POST: valid trumpet with specific values
+        it('should POST a trumpet with specific  values', (done) => {
+            var info_id = mongoose.Types.ObjectId();
+            let trumpet = {
+                user_info_id: info_id,
+                text: "PLS POST!",
+                likes: 6,
+                retrumpets: 3,
+                replies: 7
+            }
+            chai.request(server)
+                .post('/trumpets')
+                .send(trumpet)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('user_info_id').eql(info_id);
+                    res.body.should.not.have.property('reply_trumpet_id');
+                    res.body.should.have.property('submit_time');
+                    res.body.should.have.property('text').eql("PLS POST!");
+                    res.body.should.have.property('likes').eql(0);
+                    res.body.should.have.property('retrumpets').eql(0);
+                    res.body.should.have.property('replies').eql(0);
+                    done();
+                });
+        });        
+
 
 
 

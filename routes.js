@@ -212,8 +212,7 @@ router.route('/trumpets/:trumpet_id/replies')
 router.route('/trumpets')
     .post(function(req, res) {
         var trumpet = new Trumpet();
-	trumpet.user_info_id = req.body.user_info_id;
-	trumpet.reply_trumpet_id = null;
+	    trumpet.user_info_id = req.body.user_info_id;
         trumpet.submit_time = req.body.submit_time;
         trumpet.text = req.body.text;
         trumpet.likes = 0;
@@ -231,8 +230,8 @@ router.route('/trumpets')
 router.route('/trumpets/reply')
     .post(function(req, res) {
         var trumpet = new Trumpet();
-	trumpet.user_info_id = req.body.user_info_id;
-	trumpet.reply_trumpet_id = req.body.reply_trumpet_id;
+	    trumpet.user_info_id = req.body.user_info_id;
+	    trumpet.reply_trumpet_id = req.body.reply_trumpet_id;
         trumpet.submit_time = req.body.submit_time;
         trumpet.text = req.body.text;
         trumpet.likes = 0;
