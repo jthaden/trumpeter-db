@@ -126,6 +126,18 @@ router.route('/user-info/:user-info_id')
         });
     });
 
+// Create a user-info
+router.route('/user-info')
+    .post(function(req, res) {
+        var userInfo = new UserInfo(req.body);
+        userInfo.save(function(err. finalUserInfo) {
+            if (err)
+                res.send(err);
+            res.json({ message: 'UserInfo created and submitted successfully.', finalUserInfo });
+        });
+    });
+
+
 
 /**************
 ** Trumpets
@@ -165,10 +177,10 @@ router.route('/trumpets/:trumpet_id/likes')
             if (err)
                 res.send(err);
 	        trumpet.likes = trumpet.likes + 1;
-            trumpet.save(function(err) {
+            trumpet.save(function(err, finalTrumpet) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Trumpet like count successfully updated.', trumpet });
+                res.json({ message: 'Trumpet like count successfully updated.', finalTrumpet });
             });
  
         });
@@ -181,10 +193,10 @@ router.route('/trumpets/:trumpet_id/retrumpets')
             if (err)
                 res.send(err);
 	        trumpet.retrumpets = trumpet.retrumpets + 1;
-            trumpet.save(function(err) {
+            trumpet.save(function(err, finalTrumpet) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Trumpet retrumpet count successfully updated.', trumpet });
+                res.json({ message: 'Trumpet retrumpet count successfully updated.', finalTrumpet });
             });
  
         });
@@ -198,50 +210,24 @@ router.route('/trumpets/:trumpet_id/replies')
             if (err)
                 res.send(err);
 	        trumpet.replies = trumpet.replies + 1;
-            trumpet.save(function(err) {
+            trumpet.save(function(err, finalTrumpet) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Trumpet reply count successfully updated.', trumpet });
+                res.json({ message: 'Trumpet reply count successfully updated.', finalTrumpet });
             });
  
         });
     });
 
 
-// Create a new non-reply trumpet
+// Create a trumpet
 router.route('/trumpets')
     .post(function(req, res) {
-        var trumpet = new Trumpet();
-	    trumpet.user_info_id = req.body.user_info_id;
-	    //trumpet.reply_trumpet_id = null;              // field not present in non-reply trumpets
-        trumpet.submit_time = req.body.submit_time;
-        trumpet.text = req.body.text;
-        trumpet.likes = 0;
-        trumpet.retrumpets = 0;
-        trumpet.replies = 0;
-        trumpet.save(function(err) {
+        var trumpet = new Trumpet(req.body);
+        trumpet.save(function(err. finalTrumpet) {
             if (err)
                 res.send(err);
-            res.json({ message: 'Trumpet created and submitted successfully.', trumpet });
-        });
-    });
-
-
-// Create a new reply trumpet
-router.route('/trumpets/reply')
-    .post(function(req, res) {
-        var trumpet = new Trumpet();
-	    trumpet.user_info_id = req.body.user_info_id;
-	    trumpet.reply_trumpet_id = req.body.reply_trumpet_id;
-        trumpet.submit_time = req.body.submit_time;
-        trumpet.text = req.body.text;
-        trumpet.likes = 0;
-        trumpet.retrumpets = 0;
-        trumpet.replies = 0;
-        trumpet.save(function(err) {
-            if (err)
-                res.send(err);
-            res.json({ message: 'Reply trumpet created and submitted successfully.', trumpet });
+            res.json({ message: 'Trumpet created and submitted successfully.', finalTrumpet });
         });
     });
 
@@ -287,13 +273,11 @@ router.route('/retrumpets/:retrumpet_id')
 // Create a new retrumpet
 router.route('/retrumpets')
     .post(function(req, res) {
-        var retrumpet = new Retrumpet();
-        retrumpet.trumpet_id = req.body.trumpet_id;
-        retrumpet.retrumpeter_username = req.body.retrumpeter_username;;
-        retrumpet.save(function(err) {
+        var retrumpet = new Retrumpet(req.body);
+        retrumpet.save(function(err, finalRetrumpet) {
             if (err)
                 res.send(err);
-            res.json({ message: 'Retrumpet created and submitted successfully.', retrumpet });
+            res.json({ message: 'Retrumpet created and submitted successfully.', finalRetrumpet });
         });
     });
 
