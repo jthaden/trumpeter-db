@@ -20,7 +20,7 @@ var Retrumpet   = require('./models/retrumpet');
 // TODO: replace arrow functions (lambdas)
 // assert or expect instead of should?
 
-chai.use(chatHttp);
+chai.use(chaiHttp);
 
 
 /**************
@@ -184,8 +184,31 @@ describe('Trumpets', () => {
     });
 
     // DELETE/:trumpet_id: delete trumpet with provided id
-              
-
+    describe('/DELETE/:id trumpet', () => {
+        it('should DELETE a trumpet with provided id', (done) => {
+            var info_id_5 = mongoose.Types.ObjectId();
+            let trumpet = new Trumpet({
+                user_info_id: info_id_5,
+                text: "DELETE ME!",
+                likes: 555,
+                retrumpets: 444,
+                replies: 333
+            });
+            trumpet.save((err, finalTrumpet) => {
+                chai.request(server)
+                .delete('/trumpets/' + finalTrumpet.id) 
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('Trumpet deleted successfully.');
+                    res.body.result.should.have.property('ok').eql(1);
+                    res.body.result.should.have.property('n').eql(1);
+                    done();
+                });
+            });
+        });
+    });
+});
 
 
    

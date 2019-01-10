@@ -3,9 +3,10 @@ var app        = express();
 var bodyParser = require('body-parser');
 var routes     = require('./routes');
 var passport   = require('passport');
+var config     = require('config');
 
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/trumpeter-db')
+mongoose.connect(config.DBHost);
 
 // Load Passport config
 // TODO: Ensure that I'm properly requiring Passport config AFTER loading models or I will have issues
