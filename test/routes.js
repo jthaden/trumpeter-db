@@ -11,11 +11,10 @@ var server = require('../server');
 var should = chai.should();
 
 // TODO: This or mongoose.model('Model')?
-var User        = require('./models/user');
-var UserInfo    = require('./models/user-info');
-var Trumpet     = require('./models/trumpet');
-var Retrumpet   = require('./models/retrumpet');
-
+var User        = require('../models/user');
+var UserInfo    = require('../models/user-info');
+var Trumpet     = require('../models/trumpet');
+var Retrumpet   = require('../models/retrumpet');
 
 // TODO: replace arrow functions (lambdas)
 // assert or expect instead of should?
@@ -62,7 +61,7 @@ describe('Trumpets', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('errors');
                     res.body.errors.should.have.property('user_info_id');
-                    res.body.errors.user_info_id.should.have.property.('kind').eql('required');
+                    res.body.errors.user_info_id.should.have.property('kind').eql('required');
                     done();
                 });
         });
@@ -80,13 +79,13 @@ describe('Trumpets', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('user_info_id').eql(info_id_1);
-                    res.body.should.not.have.property('reply_trumpet_id');
-                    res.body.should.have.property('submit_time');
-                    res.body.should.have.property('text').eql("PLS POST!");
-                    res.body.should.have.property('likes').eql(0);
-                    res.body.should.have.property('retrumpets').eql(0);
-                    res.body.should.have.property('replies').eql(0);
+                    res.body.should.have.nested.property('finalTrumpet.user_info_id').eql(String(info_id_1));
+                    res.body.should.not.have.nested.property('finalTrumpet.reply_trumpet_id');
+                    res.body.should.have.nested.property('finalTrumpet.submit_time');
+                    res.body.should.have.nested.property('finalTrumpet.text').eql("PLS POST!");
+                    res.body.should.have.nested.property('finalTrumpet.likes').eql(0);
+                    res.body.should.have.nested.property('finalTrumpet.retrumpets').eql(0);
+                    res.body.should.have.nested.property('finalTrumpet.replies').eql(0);
                     done();
                 });
         });        
@@ -106,13 +105,13 @@ describe('Trumpets', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('user_info_id').eql(info_id_2);
-                    res.body.should.not.have.property('reply_trumpet_id');
-                    res.body.should.have.property('submit_time');
-                    res.body.should.have.property('text').eql("PLS POST 2!");
-                    res.body.should.have.property('likes').eql(6);
-                    res.body.should.have.property('retrumpets').eql(3);
-                    res.body.should.have.property('replies').eql(7);
+                    res.body.should.have.nested.property('finalTrumpet.user_info_id').eql(String(info_id_2));
+                    res.body.should.not.have.nested.property('finalTrumpet.reply_trumpet_id');
+                    res.body.should.have.nested.property('finalTrumpet.submit_time');
+                    res.body.should.have.nested.property('finalTrumpet.text').eql("PLS POST 2!");
+                    res.body.should.have.nested.property('finalTrumpet.likes').eql(6);
+                    res.body.should.have.nested.property('finalTrumpet.retrumpets').eql(3);
+                    res.body.should.have.nested.property('finalTrumpet.replies').eql(7);
                     done();
                 });
         });
@@ -136,14 +135,14 @@ describe('Trumpets', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('user_info_id').eql(finalTrumpet.user_info_id);
-                    res.body.should.not.have.property('reply_trumpet_id');
-                    res.body.should.have.property('submit_time');
-                    res.body.should.have.property('text').eql("GET ME!");
-                    res.body.should.have.property('likes').eql(1);
-                    res.body.should.have.property('retrumpets').eql(2);
-                    res.body.should.have.property('replies').eql(3);
-                    res.body.should.have.property('_id').eql(finalTrumpet.id);
+                    res.body.should.have.nested.property('trumpet.user_info_id').eql(String(finalTrumpet.user_info_id));
+                    res.body.should.not.have.nested.property('trumpet.reply_trumpet_id');
+                    res.body.should.have.nested.property('trumpet.submit_time');
+                    res.body.should.have.nested.property('trumpet.text').eql("GET ME!");
+                    res.body.should.have.nested.property('trumpet.likes').eql(1);
+                    res.body.should.have.nested.property('trumpet.retrumpets').eql(2);
+                    res.body.should.have.nested.property('trumpet.replies').eql(3);
+                    res.body.should.have.nested.property('trumpet._id').eql(String(finalTrumpet.id));
                     done();
                 });
             });
@@ -163,20 +162,20 @@ describe('Trumpets', () => {
             });
             trumpet.save((err, finalTrumpet) => {
                 chai.request(server)
-                .put('trumpets/' + finalTrumpet.id + '/likes')
+                .put('/trumpets/' + finalTrumpet.id + '/likes')
                 .send({trumpet_id: finalTrumpet.id})
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Trumpet like count successfully updated.');
-                    res.body.should.have.property('likes').eql(1000);
-                    res.body.should.have.property('user_info_id').eql(finalTrumpet.user_info_id);
-                    res.body.should.not.have.property('reply_trumpet_id');
-                    res.body.should.have.property('submit_time');
-                    res.body.should.have.property('text').eql("UPDATE MY LIKES!");
-                    res.body.should.have.property('retrumpets').eql(1);
-                    res.body.should.have.property('replies').eql(1);
-                    res.body.should.have.property('_id').eql(finalTrumpet.id);
+                    res.body.should.have.nested.property('finalTrumpet.likes').eql(1000);
+                    res.body.should.have.nested.property('finalTrumpet.user_info_id').eql(String(finalTrumpet.user_info_id));
+                    res.body.should.not.have.nested.property('finalTrumpet.reply_trumpet_id');
+                    res.body.should.have.nested.property('finalTrumpet.submit_time');
+                    res.body.should.have.nested.property('finalTrumpet.text').eql("UPDATE MY LIKES!");
+                    res.body.should.have.nested.property('finalTrumpet.retrumpets').eql(1);
+                    res.body.should.have.nested.property('finalTrumpet.replies').eql(1);
+                    res.body.should.have.nested.property('finalTrumpet._id').eql(String(finalTrumpet.id));
                     done();
                 });
             });
@@ -201,8 +200,8 @@ describe('Trumpets', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Trumpet deleted successfully.');
-                    res.body.result.should.have.property('ok').eql(1);
-                    res.body.result.should.have.property('n').eql(1);
+                    res.body.should.have.nested.property('trumpet.ok').eql(1);
+                    res.body.should.have.nested.property('trumpet.n').eql(1);
                     done();
                 });
             });

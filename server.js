@@ -24,5 +24,5 @@ app.use(passport.initialize());
 app.use('/', routes);
  
 // Start server listening on port 8080
-app.listen(port);
-console.log('RESTAPI listening on port: ' + port);
+module.exports = app.listen(port);
+console.log('trumpeter-db listening on port: ' + port);

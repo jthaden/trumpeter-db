@@ -1,1 +1,1 @@
-```javascript { "DBHost": "mongodb://localhost/trumpeter-db" } ```
+{ "DBHost": "mongodb://localhost/trumpeter-db" }
