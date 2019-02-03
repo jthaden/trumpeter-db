@@ -11,13 +11,8 @@ var jwt          = require('jsonwebtoken');
  * users in the API (routes.js).  
  **/
 
-var userInfoSchema = new Schema({
-    username: { type: String, required: true },
-    profile_picture: Buffer
-});
-
 var userSchema = new Schema({
-    user_info: { type: userInfoSchema, required: true }, 
+    user_info_id: { type: ObjectId, required: true, ref: 'UserInfo' }, 
     email_addr: { type: String, unique: true, required: true },
     username: { type: String, unique: true, required: true },
     profile_picture: Buffer,
@@ -52,12 +47,11 @@ userSchema.methods.generateJwt = function() {
     expiry.setDate(expiry.getDate() + 7);
     return jwt.sign({
         _id: this._id,
-        user_info: this.user_info,
+        user_info_id: this.user_info_id,
         email_addr: this.email_addr,
         username: this.username,
         exp: parseInt(expiry.getTime() / 1000),
     }, "Rollercoaster_Tycoon"); 
 };
 
-//module.exports = mongoose.model('UserInfo', userInfoSchema);
 module.exports = mongoose.model('User', userSchema);

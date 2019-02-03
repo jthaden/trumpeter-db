@@ -59,7 +59,7 @@ router.route('/register')
         userInfo.save(function(err){
 
         });
-        user.user_info = userInfo; 
+        user.user_info_id = userInfo.id; 
 
         // Return new user state with JWT
         user.save(function(err){
