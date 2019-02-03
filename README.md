@@ -115,7 +115,7 @@ this case due to the frequency of update operations.
 
 
 ## Relational Data Model (old):
-NOTE: This data model is outdated and represents the original model design before porting to NoSQL.
+**NOTE:** This data model is outdated and represents the original model design before porting to NoSQL.
 Relationally, the database is built around four entities: Users, UserInfo, Trumpets, and ReTrumpets. Trumpet entities can also be split
 into two separate categories: Trumpets and ReplyTrumpets. The diagram below contains additional details regarding types and relations.
 
